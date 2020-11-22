@@ -643,24 +643,60 @@ WorldPacket const* WorldPackets::Guild::GuildBankQueryResults::Write()
     return &_worldPacket;
 }
 
+
 void WorldPackets::Guild::GuildBankSwapItems::Read()
 {
     _worldPacket >> Banker;
     _worldPacket >> BankTab;
     _worldPacket >> BankSlot;
-    _worldPacket >> ItemID;
-    _worldPacket >> BankTab1;
-    _worldPacket >> BankSlot1;
-    _worldPacket >> ItemID1;
-    _worldPacket >> BankItemCount;
-    _worldPacket >> ContainerSlot;
-    _worldPacket >> ContainerItemSlot;
-    _worldPacket >> ToSlot;
+    _worldPacket >> PlayerSlot;
+
+    bool hasPlayerBag = _worldPacket.ReadBit();
+    _worldPacket.ResetBitPos();
+
+    if (hasPlayerBag)
+        _worldPacket >> PlayerBag;
+}
+
+void WorldPackets::Guild::GuildBankSwapItemsBankBank::Read()
+{
+    _worldPacket >> Banker;
+    _worldPacket >> BankTab;
+    _worldPacket >> BankSlot;
+    _worldPacket >> NewBankTab;
+    _worldPacket >> NewBankSlot;
+}
+
+void WorldPackets::Guild::GuildBankSwapItemsAuto::Read()
+{
+    _worldPacket >> Banker;
+    _worldPacket >> BankTab;
+    _worldPacket >> BankSlot;
+}
+
+void WorldPackets::Guild::GuildBankSwapItemsCount::Read()
+{
+    _worldPacket >> Banker;
+    _worldPacket >> BankTab;
+    _worldPacket >> BankSlot;
+    _worldPacket >> PlayerSlot;
     _worldPacket >> StackCount;
 
+    bool hasPlayerBag = _worldPacket.ReadBit();
     _worldPacket.ResetBitPos();
-    BankOnly = _worldPacket.ReadBit();
-    AutoStore = _worldPacket.ReadBit();
+
+    if (hasPlayerBag)
+        _worldPacket >> PlayerBag;
+}
+
+void WorldPackets::Guild::GuildBankSwapItemsBankBankCount::Read()
+{
+    _worldPacket >> Banker;
+    _worldPacket >> BankTab;
+    _worldPacket >> BankSlot;
+    _worldPacket >> NewBankTab;
+    _worldPacket >> NewBankSlot;
+    _worldPacket >> StackCount;
 }
 
 void WorldPackets::Guild::GuildBankLogQuery::Read()

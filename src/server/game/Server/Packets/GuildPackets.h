@@ -835,20 +835,68 @@ namespace WorldPackets
             void Read() override;
 
             ObjectGuid Banker;
-            int32 StackCount = 0;
-            int32 BankItemCount = 0;
-            uint32 ItemID = 0;
-            uint32 ItemID1 = 0;
-            uint8 ToSlot = 0;
-            uint8 BankSlot = 0;
-            uint8 BankSlot1 = 0;
-            uint8 BankTab = 0;
-            uint8 BankTab1 = 0;
-            uint8 ContainerSlot = 0;
-            uint8 ContainerItemSlot = 0;
-            bool AutoStore = false;
-            bool BankOnly = false;
+            uint8 BankTab;
+            uint8 BankSlot;
+            uint8 PlayerSlot;
+            uint8 PlayerBag = 0;
         };
+
+        class GuildBankSwapItemsBankBank final : public ClientPacket
+        {
+        public:
+            GuildBankSwapItemsBankBank(WorldPacket&& packet) : ClientPacket(std::move(packet)) { }
+
+            void Read() override;
+
+            ObjectGuid Banker;
+            uint8 BankTab;
+            uint8 BankSlot;
+            uint8 NewBankTab;
+            uint8 NewBankSlot;
+        };
+
+        class GuildBankSwapItemsAuto final : public ClientPacket
+        {
+        public:
+            GuildBankSwapItemsAuto(WorldPacket&& packet) : ClientPacket(std::move(packet)) { }
+
+            void Read() override;
+
+            ObjectGuid Banker;
+            uint8 BankTab;
+            uint8 BankSlot;
+        };
+
+        class GuildBankSwapItemsCount final : public ClientPacket
+        {
+        public:
+            GuildBankSwapItemsCount(WorldPacket&& packet) : ClientPacket(std::move(packet)) { }
+
+            void Read() override;
+
+            ObjectGuid Banker;
+            uint8 BankTab;
+            uint8 BankSlot;
+            uint8 PlayerSlot;
+            uint8 PlayerBag = 0;
+            uint32 StackCount;
+        };
+
+        class GuildBankSwapItemsBankBankCount final : public ClientPacket
+        {
+        public:
+            GuildBankSwapItemsBankBankCount(WorldPacket&& packet) : ClientPacket(std::move(packet)) { }
+
+            void Read() override;
+
+            ObjectGuid Banker;
+            uint8 BankTab;
+            uint8 BankSlot;
+            uint8 NewBankTab;
+            uint8 NewBankSlot;
+            uint32 StackCount;
+        };
+
 
         class GuildBankLogQuery final : public ClientPacket
         {
